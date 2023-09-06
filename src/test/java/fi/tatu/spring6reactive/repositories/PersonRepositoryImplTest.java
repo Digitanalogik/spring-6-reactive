@@ -2,6 +2,7 @@ package fi.tatu.spring6reactive.repositories;
 
 import fi.tatu.spring6reactive.domain.Person;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,5 +53,23 @@ class PersonRepositoryImplTest {
 
         personMono.map(Person::getFirstName)
             .subscribe(System.out::println);
+    }
+
+    @Test
+    void testFluxBlockFirst() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        Person person = personFlux.blockFirst();
+
+        System.out.println(person.toString());
+    }
+
+    @Test
+    void testFluxSubscriber() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        personFlux.subscribe(person -> {
+            System.out.println(person.toString());
+        });
     }
 }
