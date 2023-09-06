@@ -72,4 +72,12 @@ class PersonRepositoryImplTest {
             System.out.println(person.toString());
         });
     }
+
+    @Test
+    void testFluxMap() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        personFlux.map(Person::getFirstName)
+            .subscribe(firstName -> System.out.println(firstName));
+    }
 }
