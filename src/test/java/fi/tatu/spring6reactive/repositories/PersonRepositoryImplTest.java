@@ -104,9 +104,34 @@ class PersonRepositoryImplTest {
     @Test
     void testGetById() {
         Mono<Person> marioMono = personRepository.findAll()
-                .filter(person -> person.getFirstName().equals("Mario"))
-                .next();
+            .filter(person -> person.getFirstName().equals("Mario"))
+            .next();
 
         marioMono.subscribe(person -> System.out.println(person.getFirstName()));
     }
+
+    @Test
+    void testFindPersonByIdNotFound() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        // Important: always use final values with reactive streams!
+        // Variables are not allowed to mutate while processing the stream
+        final Integer id = 8;
+
+        Mono<Person> personMono = personFlux
+            .filter(person -> person.getId() == id)
+            .single().doOnError(throwable -> {
+                System.out.println("Error occured in the Flux");
+                System.out.println(throwable.toString());
+        });
+
+        personMono.subscribe(person -> {
+            System.out.println(person.toString());
+        }, throwable -> {
+            System.out.println("Error occured in the Mono");
+            System.out.println(throwable.toString());
+        });
+
+    }
+
 }
