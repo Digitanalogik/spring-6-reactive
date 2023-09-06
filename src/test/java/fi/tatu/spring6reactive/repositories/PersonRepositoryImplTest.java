@@ -100,4 +100,13 @@ class PersonRepositoryImplTest {
             .filter(person -> person.getFirstName().equals("Mario"))
             .subscribe(person -> System.out.println(person.getFirstName()));
     }
+
+    @Test
+    void testGetById() {
+        Mono<Person> marioMono = personRepository.findAll()
+                .filter(person -> person.getFirstName().equals("Mario"))
+                .next();
+
+        marioMono.subscribe(person -> System.out.println(person.getFirstName()));
+    }
 }
