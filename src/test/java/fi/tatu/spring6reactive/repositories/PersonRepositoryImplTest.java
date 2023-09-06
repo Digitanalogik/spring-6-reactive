@@ -118,6 +118,9 @@ class PersonRepositoryImplTest {
         // Variables are not allowed to mutate while processing the stream
         final Integer id = 8;
 
+        // Expect and emit a single item from this Flux source or signal
+        // - NoSuchElementException for an empty source, or
+        // - IndexOutOfBoundsException for a source with more than one element.
         Mono<Person> personMono = personFlux
             .filter(person -> person.getId() == id)
             .single().doOnError(throwable -> {
@@ -125,6 +128,8 @@ class PersonRepositoryImplTest {
                 System.out.println(throwable.toString());
         });
 
+        // Without subscriber there is no back pressure, thus errors won't be raised even with empty stream
+        // But now with the subscribe method, the process is trying to read the stream but fails because it is empty
         personMono.subscribe(person -> {
             System.out.println(person.toString());
         }, throwable -> {
