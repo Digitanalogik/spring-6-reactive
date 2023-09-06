@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonRepositoryImplTest {
@@ -79,5 +81,16 @@ class PersonRepositoryImplTest {
 
         personFlux.map(Person::getFirstName)
             .subscribe(firstName -> System.out.println(firstName));
+    }
+
+    @Test
+    void testFluxToList() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        Mono<List<Person>> listMono = personFlux.collectList();
+
+        listMono.subscribe(list -> {
+           list.forEach(person -> System.out.println(person.getFirstName()));
+        });
     }
 }
