@@ -107,6 +107,10 @@ class PersonRepositoryImplTest {
             .filter(person -> person.getFirstName().equals("Mario"))
             .next();
 
+        // next()
+        // Emit only the first item emitted by this Flux, into a new Mono.
+        // If called on an empty Flux, emits an empty Mono.
+
         marioMono.subscribe(person -> System.out.println(person.getFirstName()));
     }
 
@@ -118,13 +122,14 @@ class PersonRepositoryImplTest {
         // Variables are not allowed to mutate while processing the stream
         final Integer id = 8;
 
+        // single()
         // Expect and emit a single item from this Flux source or signal
         // - NoSuchElementException for an empty source, or
         // - IndexOutOfBoundsException for a source with more than one element.
         Mono<Person> personMono = personFlux
             .filter(person -> person.getId() == id)
             .single().doOnError(throwable -> {
-                System.out.println("Error occured in the Flux");
+                System.out.println("Error occurred in the Flux");
                 System.out.println(throwable.toString());
         });
 
@@ -133,7 +138,7 @@ class PersonRepositoryImplTest {
         personMono.subscribe(person -> {
             System.out.println(person.toString());
         }, throwable -> {
-            System.out.println("Error occured in the Mono");
+            System.out.println("Error occurred in the Mono");
             System.out.println(throwable.toString());
         });
 
