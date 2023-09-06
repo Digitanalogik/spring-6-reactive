@@ -141,7 +141,19 @@ class PersonRepositoryImplTest {
             System.out.println("Error occurred in the Mono");
             System.out.println(throwable.toString());
         });
-
     }
 
+    @Test
+    void testGetIdFound() {
+        Mono<Person> personMono = personRepository.getById(3);
+
+        assertTrue(personMono.hasElement().block());
+    }
+
+    @Test
+    void testGetIdNotFound() {
+        Mono<Person> personMono = personRepository.getById(5);
+
+        assertFalse(personMono.hasElement().block());
+    }
 }
