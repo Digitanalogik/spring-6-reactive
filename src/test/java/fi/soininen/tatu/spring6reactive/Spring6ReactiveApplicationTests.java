@@ -1,4 +1,4 @@
-package fi.tatu.spring6reactive;
+package fi.soininen.tatu.spring6reactive;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

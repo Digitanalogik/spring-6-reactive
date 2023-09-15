@@ -1,6 +1,6 @@
-package fi.tatu.spring6reactive.repositories;
+package fi.soininen.tatu.spring6reactive.repositories;
 
-import fi.tatu.spring6reactive.domain.Person;
+import fi.soininen.tatu.spring6reactive.domain.Person;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

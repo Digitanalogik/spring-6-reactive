@@ -1,4 +1,4 @@
-package fi.tatu.spring6reactive.domain;
+package fi.soininen.tatu.spring6reactive.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
